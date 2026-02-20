@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mc20000 | Developer Portfolio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: { 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5' },
+                        dark: { 800: '#1e293b', 900: '#0f172a', 950: '#020617' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #020617;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+        
+        .glass-nav {
+            background: rgba(2, 6, 23, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .glow-bg {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, rgba(0,0,0,0) 70%);
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: -1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-500 selection:text-white relative">
+
+    <div class="glow-bg"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#home" class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+                <i class="ph ph-terminal-window text-brand-500"></i> mc20000
+            </a>
+            <div class="hidden md:flex gap-8 text-sm font-medium text-slate-300">
+                <a href="#home" class="hover:text-brand-400 transition-colors">Home</a>
+                <a href="#projects" class="hover:text-brand-400 transition-colors">Projects</a>
+                <a href="#contact" class="hover:text-brand-400 transition-colors">Contact</a>
+            </div>
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-slate-300 hover:text-white">
+                <i class="ph ph-list text-2xl"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center pt-20 px-6">
+        <div class="max-w-4xl mx-auto text-center flex flex-col items-center">
+            <div class="relative mb-8 group">
+                <div class="absolute -inset-1 bg-gradient-to-r from-brand-600 to-purple-600 rounded-full blur opacity-70 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+                <!-- Updated PFP to use the uploaded image -->
+                <img id="hero-pfp" src="Untitled257_20260217090821(pfp size).jpg" alt="mc20000" class="relative w-32 h-32 md:w-48 md:h-48 rounded-full border-2 border-slate-800 object-cover bg-dark-900 shadow-2xl">
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-4 text-white">
+                Hi, I'm <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-purple-400">mc20000</span>
+            </h1>
+            <p class="text-xl text-slate-400 mb-8 max-w-2xl">
+                Developer, creator, and builder. Check out my work on <span class="text-brand-400">boxedLANG</span> and my server space at sdisk.us.
+            </p>
+            
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#projects" class="px-8 py-3 bg-brand-600 hover:bg-brand-500 text-white rounded-xl font-semibold transition-all shadow-lg shadow-brand-500/25 flex items-center gap-2">
+                    <i class="ph ph-rocket-launch"></i> Featured Project
+                </a>
+                <a href="#contact" class="px-8 py-3 bg-dark-800 hover:bg-slate-700 border border-slate-700 text-white rounded-xl font-semibold transition-all flex items-center gap-2">
+                    <i class="ph ph-hand-waving"></i> Get in Touch
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-24 px-6 bg-dark-950">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center md:text-left mb-12">
+                <h2 class="text-3xl font-bold mb-2 flex items-center justify-center md:justify-start gap-2">
+                    <i class="ph ph-code-block text-brand-500"></i> What I'm Building
+                </h2>
+                <div class="w-20 h-1 bg-brand-500 rounded-full mx-auto md:mx-0"></div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-8">
+                <!-- Project: boxedLANG & box.sdisk.us -->
+                <a href="https://box.sdisk.us" target="_blank" class="group block p-1 rounded-3xl bg-gradient-to-br from-slate-800 to-dark-900 hover:from-brand-500 hover:to-purple-600 transition-all duration-500 shadow-xl">
+                    <div class="bg-dark-900 h-full p-8 md:p-12 rounded-[1.4rem] flex flex-col md:flex-row gap-8 items-start md:items-center">
+                        <div class="w-20 h-20 bg-brand-500/10 text-brand-400 rounded-2xl flex items-center justify-center shrink-0 border border-brand-500/20 shadow-inner">
+                            <i class="ph ph-brackets-curly text-4xl"></i>
+                        </div>
+                        <div class="flex-grow">
+                            <div class="flex flex-col md:flex-row md:items-center gap-3 mb-4">
+                                <h3 class="text-4xl font-bold group-hover:text-brand-400 transition-colors text-white">boxedLANG</h3>
+                                <span class="text-brand-400 font-mono text-sm bg-brand-500/10 border border-brand-500/20 px-3 py-1 rounded-full w-fit">box.sdisk.us</span>
+                            </div>
+                            <p class="text-slate-400 text-lg leading-relaxed mb-8 max-w-4xl">
+                                A custom programming language built from the ground up. Focused on logical structuring and efficient syntax. Hosted on my personal domain, this site serves as the official documentation and hub for the language's development.
+                            </p>
+                            <div class="flex items-center text-sm font-bold uppercase tracking-widest text-brand-500 group-hover:text-white transition-colors">
+                                Explore the Documentation <i class="ph ph-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Socials / Contact Section -->
+    <section id="contact" class="py-24 px-6 relative">
+        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-800 to-transparent"></div>
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-4 text-white">Let's Connect</h2>
+            <p class="text-slate-400 mb-12 text-lg">You can find me on these platforms or reach out via Discord.</p>
+
+            <div class="flex flex-col md:flex-row justify-center items-center gap-6">
+                <!-- GitHub -->
+                <a href="https://github.com/mc20000-01" target="_blank" class="w-full md:w-auto flex items-center gap-4 px-8 py-5 bg-dark-800 border border-slate-700 hover:border-slate-500 rounded-2xl transition-all hover:-translate-y-2 group">
+                    <i class="ph ph-github-logo text-3xl text-white group-hover:scale-110 transition-transform"></i>
+                    <div class="text-left">
+                        <div class="text-xs text-slate-500 uppercase tracking-widest font-bold">GitHub</div>
+                        <div class="font-semibold text-white">mc20000-01</div>
+                    </div>
+                </a>
+
+                <!-- Scratch -->
+                <a href="https://scratch.mit.edu/users/mc20000/" target="_blank" class="w-full md:w-auto flex items-center gap-4 px-8 py-5 bg-dark-800 border border-slate-700 hover:border-orange-500/50 rounded-2xl transition-all hover:-translate-y-2 group">
+                    <i class="ph ph-cat text-3xl text-orange-400 group-hover:scale-110 transition-transform"></i>
+                    <div class="text-left">
+                        <div class="text-xs text-slate-500 uppercase tracking-widest font-bold">Scratch</div>
+                        <div class="font-semibold text-white">mc20000</div>
+                    </div>
+                </a>
+
+                <!-- Discord -->
+                <button onclick="copyDiscord()" class="w-full md:w-auto flex items-center gap-4 px-8 py-5 bg-dark-800 border border-slate-700 hover:border-indigo-500/50 rounded-2xl transition-all hover:-translate-y-2 relative group">
+                    <i class="ph ph-discord-logo text-3xl text-indigo-400 group-hover:scale-110 transition-transform"></i>
+                    <div class="text-left">
+                        <div class="text-xs text-slate-500 uppercase tracking-widest font-bold">Discord</div>
+                        <div class="font-semibold text-white">@mc20000scratch</div>
+                    </div>
+                    <!-- Tooltip -->
+                    <span id="discord-tooltip" class="absolute -top-12 left-1/2 -translate-x-1/2 bg-brand-600 text-white text-xs py-2 px-4 rounded-lg opacity-0 transition-opacity pointer-events-none whitespace-nowrap shadow-xl">
+                        Click to copy!
+                    </span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-slate-800/50 bg-dark-950 text-center">
+        <p class="text-slate-500 text-sm">
+            &copy; <span id="year"></span> mc20000. Built with care and hosted on <a href="https://sdisk.us" class="text-brand-400 hover:underline">sdisk.us</a>.
+        </p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Set current year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Copy Discord Username
+        function copyDiscord() {
+            const discordTag = "@mc20000scratch";
+            const tooltip = document.getElementById('discord-tooltip');
+            
+            navigator.clipboard.writeText(discordTag).then(() => {
+                const originalText = tooltip.textContent;
+                tooltip.textContent = "Copied to clipboard!";
+                tooltip.classList.remove('opacity-0');
+                tooltip.classList.add('opacity-100');
+                
+                setTimeout(() => {
+                    tooltip.classList.remove('opacity-100');
+                    tooltip.classList.add('opacity-0');
+                    setTimeout(() => tooltip.textContent = originalText, 300);
+                }, 2000);
+            }).catch(() => {
+                // Fallback for some environments
+                const textArea = document.createElement("textarea");
+                textArea.value = discordTag;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                tooltip.textContent = "Copied!";
+                tooltip.classList.remove('opacity-0');
+                tooltip.classList.add('opacity-100');
+                setTimeout(() => {
+                    tooltip.classList.remove('opacity-100');
+                    tooltip.classList.add('opacity-0');
+                }, 2000);
+            });
+        }
+
+        // Navigation background change on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.paddingTop = '0.75rem';
+                nav.style.paddingBottom = '0.75rem';
+                nav.classList.add('shadow-2xl');
+            } else {
+                nav.style.paddingTop = '1rem';
+                nav.style.paddingBottom = '1rem';
+                nav.classList.remove('shadow-2xl');
+            }
+        });
+    </script>
+</body>
+</html>
