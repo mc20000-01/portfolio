@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+.space-mono-regular {
+  font-family: "Space Mono", monospace;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.space-mono-bold {
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.space-mono-regular-italic {
+  font-family: "Space Mono", monospace;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.space-mono-bold-italic {
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  font-style: italic;
+}
+
+*, *::before, *::after {
+  font-family: 'Space Mono', monospace !important;
+}
+
+body {
+  font-size: 16px !important;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    background-color: #000000;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    margin: 0;
+}
+
+main {
+    flex: 4;
+    padding: 20px;
+}
+
+h1 {
+    display: flex;
+    justify-content: space-between;
+    white-space: nowrap;
+}
+
+h1 > div {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    gap: 10px;
+}
+
+.cards {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.card {
+    max-width: 250px;
+    color: #ffffff;
+    background: #404040;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    box-sizing: border-box;
+    outline: none;
+}
