@@ -34,6 +34,9 @@ body {
     display: flex;
     font-size: 16px !important;
     background-color: #000000;
+    background-image: url(dark-abstract-pixel-rain-background_23-2148366786.png);
+    background-repeat: no-repeat; 
+    background-size: cover; 
     color: #ffffff;
     display: flex;
     flex-direction: column;
