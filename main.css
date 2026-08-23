@@ -64,6 +64,10 @@ h1 > div {
     gap: 10px;
 }
 
+h2 {
+    justify-self: center;
+}
+
 .cards {
     display: flex;
     justify-content: center;
