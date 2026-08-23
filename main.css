@@ -29,26 +29,17 @@
     --rt-font: "Space Mono", monospace;
 }
 
-body {
-  font-size: 16px !important;
-}
-
-html {
-    height: 100%;
-}
 
 body {
+    display: flex;
+    font-size: 16px !important;
     background-color: #000000;
     color: #ffffff;
     display: flex;
     flex-direction: column;
     min-height: 100%;
-    margin: 0;
-}
-
-main {
-    flex: 4;
-    padding: 20px;
+    max-width:1600 ;
+    margin: auto;
 }
 
 h1 {
