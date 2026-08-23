@@ -24,8 +24,9 @@
   font-style: italic;
 }
 
-*, *::before, *::after {
-  font-family: 'Space Mono', monospace !important;
+:root, *, *::before, *::after {
+    font-family: 'Space Mono', monospace !important;
+    --rt-font: "Space Mono", monospace;
 }
 
 body {
@@ -43,16 +44,6 @@ body {
     flex-direction: column;
     min-height: 100%;
     margin: 0;
-}
-
-[data-rotur-comments] {
-    --rt-font: "Space Mono", monospace;
-}
-[data-rotur-status] {
-    --rt-font: "Space Mono", monospace;
-}
-[data-rotur-followers] {
-    --rt-font: "Space Mono", monospace;
 }
 
 main {
