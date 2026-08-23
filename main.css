@@ -45,6 +45,16 @@ body {
     margin: 0;
 }
 
+[data-rotur-comments] {
+    --rt-font: "Space Mono", monospace;
+}
+[data-rotur-status] {
+    --rt-font: "Space Mono", monospace;
+}
+[data-rotur-followers] {
+    --rt-font: "Space Mono", monospace;
+}
+
 main {
     flex: 4;
     padding: 20px;
