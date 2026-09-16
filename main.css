@@ -46,6 +46,13 @@ body {
     margin: auto;
 }
 
+body > footer > div {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 50px;
+}
+
 h1 {
     display: flex;
     justify-content: space-between;
@@ -81,4 +88,29 @@ h2 {
     padding: 20px;
     box-sizing: border-box;
     outline: none;
+}
+
+a {
+  color: #a283d7;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+ 
+a:hover {
+  color: #a890d1;
+  border-bottom-color: currentColor;
+}
+ 
+a:active {
+  color: #a890d1;
+}
+ 
+a:visited {
+  color: #a890d1;
+}
+ 
+a:focus-visible {
+  outline: 2px solid #a890d1;
+  outline-offset: 2px;
 }
