@@ -34,7 +34,7 @@ body {
     display: flex;
     font-size: 16px !important;
     background-color: #000000;
-    background-image: url(wallpaper.svg);
+    background-image: url(assets/wallpaper.svg);
     background-repeat: no-repeat; 
     background-size: cover;
     background-position: center;
