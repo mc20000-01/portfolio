@@ -1,20 +1,26 @@
 const BASE = "https://wbst-api.sdisk.us";
+const CSS_FILE = "main.css";      // loaded from the same folder as this script, "" to disable
+const DEBUG_FONT = false;          // prints the fonts in use under your name, set false when done
 const POLL_MS = 3000;
 const PICKER_PAGE = 40;
 const MAX_DOM_MSGS = 300;
 const OFFLINE = "can't reach server";
 const JDENTICON = "https://cdn.jsdelivr.net/npm/jdenticon@3.3.0/dist/jdenticon.min.js";
+const SCRIPT_URL = (document.currentScript && document.currentScript.src) || location.href;
 
 // ---------- visitor id ----------
 async function getVisitorId() {
+  try {
+    const saved = localStorage.getItem("vid");
+    if (saved && /^[0-9a-f]{16}$/.test(saved)) return saved;
+  } catch {}
+
   const n = navigator;
   const parts = {
     ua: n.userAgent,
     platform: n.platform,
     lang: n.languages?.join(","),
     tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    screen: `${screen.width}x${screen.height}x${screen.colorDepth}`,
-    dpr: devicePixelRatio,
     cores: n.hardwareConcurrency,
     mem: n.deviceMemory,
     touch: n.maxTouchPoints,
@@ -35,7 +41,10 @@ async function getVisitorId() {
   const str = Object.entries(parts).map(([k, v]) => `${k}: ${v}`).join(" | ");
   const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
   const hex = [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
-  return hex.slice(0, 16);
+  const id = hex.slice(0, 16);
+
+  try { localStorage.setItem("vid", id); } catch {}
+  return id;
 }
 
 // ---------- helpers ----------
@@ -46,6 +55,19 @@ function loadScript(src) {
     s.onload = res;
     s.onerror = rej;
     document.head.appendChild(s);
+  });
+}
+
+function loadCss(href) {
+  const abs = new URL(href, SCRIPT_URL).href;
+  const already = [...document.querySelectorAll('link[rel="stylesheet"]')].some(l => l.href === abs);
+  if (already) return Promise.resolve();
+  return new Promise(res => {
+    const l = document.createElement("link");
+    l.rel = "stylesheet";
+    l.href = abs;
+    l.onload = l.onerror = res;
+    document.head.appendChild(l);
   });
 }
 
@@ -81,38 +103,44 @@ function avatar(seed, size) {
   return box;
 }
 
+// default look lives in a low-priority layer, so anything in main.css always wins
 const CSS = `
-#chat [hidden]{display:none !important}
-#chat .c-box{border:1px solid #888;padding:6px;max-width:440px;font:13px monospace;background:#fff;color:#000;box-sizing:border-box}
-#chat .c-head{display:flex;align-items:center;gap:6px;border-bottom:1px solid #888;padding-bottom:6px;margin-bottom:6px}
-#chat .c-me{cursor:pointer;display:flex;align-items:center;gap:6px;background:none;border:0;font:inherit;color:inherit;padding:0}
-#chat .c-av{display:inline-block;flex:none}
-#chat .c-panel{border:1px solid #888;padding:6px;margin-bottom:6px}
-#chat .c-row{display:flex;align-items:center;gap:4px;margin-bottom:4px}
-#chat .c-row input{flex:1;min-width:0;font:inherit}
-#chat .c-note{color:#777;font-size:11px;margin-bottom:6px}
-#chat .c-grid{display:flex;flex-wrap:wrap;gap:3px;margin:4px 0}
-#chat .c-tile{cursor:pointer;border:1px solid transparent;padding:1px;background:none;font:inherit;color:inherit}
-#chat .c-tile:hover{border-color:#888}
-#chat .c-tile.sel{border-color:#00f}
-#chat .c-auto{width:36px;height:36px;border:1px dashed #888}
-#chat .c-log{position:relative;height:260px;overflow-y:auto;border:1px inset #888;padding:4px;margin-bottom:6px}
-#chat .c-status{color:#777}
-#chat .c-msg{display:flex;gap:6px;margin-bottom:6px;align-items:flex-start;padding:2px}
-#chat .c-msg.flash{background:#ffd}
-#chat .c-body{min-width:0;flex:1}
-#chat .c-name{font-weight:bold}
-#chat .c-id,#chat .c-time{color:#888;font-size:11px;margin-left:4px}
-#chat .c-rbtn{margin-left:6px;font:inherit;font-size:11px;padding:0 4px;cursor:pointer;background:none;border:1px solid #bbb;color:#555;opacity:.6}
-#chat .c-rbtn:hover{opacity:1}
-#chat .c-quote{color:#666;font-size:11px;border-left:2px solid #bbb;padding-left:5px;margin:2px 0;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-#chat .c-text{word-break:break-word;white-space:pre-wrap}
-#chat .c-replybar{display:flex;flex-wrap:wrap;gap:4px;align-items:center;margin-bottom:4px;font-size:12px}
-#chat .c-chip{font:inherit;font-size:11px;cursor:pointer;background:#eef;border:1px solid #99c;padding:0 4px}
-#chat .c-form{display:flex;gap:4px}
-#chat .c-form input{flex:1;min-width:0;font:inherit}
-#chat .c-err{color:#c00;min-height:1.2em;font-size:12px}
-`;
+@layer chat {
+  #chat{display:block;width:100%;box-sizing:border-box;--c-line:rgba(128,128,128,.6);--c-soft:rgba(128,128,128,.2)}
+  #chat *{box-sizing:border-box}
+  #chat [hidden]{display:none !important}
+  #chat button,#chat input{font:inherit}
+  #chat .c-box{width:100%;padding:6px;border:1px solid var(--c-line)}
+  #chat .c-head{display:flex;flex-wrap:wrap;align-items:center;gap:6px;border-bottom:1px solid var(--c-line);padding-bottom:6px;margin-bottom:6px}
+  #chat .c-me{display:flex;align-items:center;gap:6px;cursor:pointer;background:none;border:0;color:inherit;padding:0}
+  #chat .c-debug{flex-basis:100%;font-size:11px;opacity:.7;word-break:break-all}
+  #chat .c-av{display:inline-block;flex:none}
+  #chat .c-panel{border:1px solid var(--c-line);padding:6px;margin-bottom:6px}
+  #chat .c-row{display:flex;align-items:center;gap:4px;margin-bottom:4px}
+  #chat .c-row input{flex:1;min-width:0}
+  #chat .c-note{font-size:11px;opacity:.6;margin-bottom:6px}
+  #chat .c-grid{display:flex;flex-wrap:wrap;gap:3px;margin:4px 0}
+  #chat .c-tile{cursor:pointer;border:1px solid transparent;padding:1px;background:none;color:inherit}
+  #chat .c-tile:hover{border-color:var(--c-line)}
+  #chat .c-tile.sel{outline:2px solid currentColor}
+  #chat .c-auto{width:36px;height:36px;border:1px dashed currentColor}
+  #chat .c-log{position:relative;height:260px;overflow-y:auto;border:1px solid var(--c-line);padding:4px;margin-bottom:6px}
+  #chat .c-status{opacity:.6}
+  #chat .c-msg{display:flex;gap:6px;margin-bottom:6px;align-items:flex-start;padding:2px}
+  #chat .c-msg.flash{background:var(--c-soft)}
+  #chat .c-body{min-width:0;flex:1}
+  #chat .c-name{font-weight:bold}
+  #chat .c-id,#chat .c-time{font-size:11px;opacity:.6;margin-left:4px}
+  #chat .c-rbtn{margin-left:6px;font-size:11px;padding:0 4px;cursor:pointer;background:none;border:1px solid var(--c-line);color:inherit;opacity:.6}
+  #chat .c-rbtn:hover{opacity:1}
+  #chat .c-quote{font-size:11px;opacity:.7;border-left:2px solid var(--c-line);padding-left:5px;margin:2px 0;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #chat .c-text{word-break:break-word;white-space:pre-wrap}
+  #chat .c-replybar{display:flex;flex-wrap:wrap;gap:4px;align-items:center;margin-bottom:4px;font-size:12px}
+  #chat .c-chip{font-size:11px;cursor:pointer;background:var(--c-soft);border:1px solid var(--c-line);color:inherit;padding:0 4px}
+  #chat .c-form{display:flex;gap:4px}
+  #chat .c-form input{flex:1;min-width:0}
+  #chat .c-err{color:#c00;min-height:1.2em;font-size:12px}
+}`;
 
 // ---------- chat ----------
 async function buildChat(id) {
@@ -121,7 +149,11 @@ async function buildChat(id) {
   root.style.display = "block";
   root.textContent = "";
 
-  try { await loadScript(JDENTICON); } catch {}
+  document.head.append(el("style", { textContent: CSS }));
+  await Promise.all([
+    loadScript(JDENTICON).catch(() => {}),
+    CSS_FILE ? loadCss(CSS_FILE) : null,
+  ]);
 
   const head = el("div", { className: "c-head" });
   const panel = el("div", { className: "c-panel", hidden: true });
@@ -133,10 +165,7 @@ async function buildChat(id) {
   const input = el("input", { type: "text" });
   const sendBtn = el("button", { type: "button", textContent: "send" });
   const form = el("div", { className: "c-form" }, input, sendBtn);
-  root.append(
-    el("style", { textContent: CSS }),
-    el("div", { className: "c-box" }, head, panel, log, replyBar, err, form)
-  );
+  root.append(el("div", { className: "c-box" }, head, panel, log, replyBar, err, form));
 
   const me = await api.get(`/cht/me?id=${id}`);
   if (!me || me.error) throw new Error("me failed");
@@ -158,12 +187,20 @@ async function buildChat(id) {
   // ----- header + settings panel -----
   function renderHead() {
     head.textContent = "";
+    const nameEl = el("span", { textContent: `you: ${me.name}` });
     head.append(
       el("button", { className: "c-me", type: "button", title: "profile settings", onclick: togglePanel },
         avatar(me.seed, 28),
-        el("span", { textContent: `you: ${me.name}` })
+        nameEl
       )
     );
+    if (DEBUG_FONT) {
+      const f = n => getComputedStyle(n).fontFamily;
+      head.append(el("div", {
+        className: "c-debug",
+        textContent: `fonts | page: ${f(document.body)} | name: ${f(nameEl)} | input: ${f(input)} | button: ${f(sendBtn)}`,
+      }));
+    }
   }
 
   function togglePanel() {
@@ -293,7 +330,7 @@ async function buildChat(id) {
     for (const r of m.replies || []) {
       const q = el("div", {
         className: "c-quote",
-        textContent: r.gone ? `↪ #${r.id} (deleted)` : `↪ ${r.name} #${r.id}: ${r.text}`,
+        textContent: r.gone ? `\u21AA #${r.id} (deleted)` : `\u21AA ${r.name} #${r.id}: ${r.text}`,
       });
       if (!r.gone) q.addEventListener("click", () => jumpTo(r.id));
       body.append(q);

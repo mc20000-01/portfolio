@@ -114,3 +114,42 @@ a:focus-visible {
   outline: 2px solid #a890d1;
   outline-offset: 2px;
 }
+
+#chat {
+  --c-line: #9c9797;
+  --c-soft: #ffffff;
+}
+
+#chat .c-box {
+  background: #14142b;
+  color: #e6e6ff;
+  border: 2px solid #979797;
+  padding: 10px;
+}
+
+#chat .c-log,
+#chat .c-panel {
+  background: #0d0d1f;
+}
+
+#chat .c-name { color: #ffffff; }
+#chat .c-id,
+#chat .c-time { color: #ffffff; opacity: 1; }
+#chat .c-quote { color: #ffffff; }
+
+#chat input {
+  background: #0d0d1f;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  padding: 4px;
+}
+
+#chat button {
+  background: #505050;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  cursor: pointer;
+}
+#chat button:hover { background: #9c9797; }
+
+#chat .c-err { color: #ff7777; }
