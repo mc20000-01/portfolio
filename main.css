@@ -142,10 +142,6 @@ mcmusic-bar {
   --mc-font: inherit;
 }
 
-div {
-  gap: 30px;
-}
-
 .buttons {
   gap: 20px;
 }
