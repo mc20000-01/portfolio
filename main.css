@@ -103,7 +103,7 @@ h2 {
   gap: 30px;
 }
 
-a {
+a.link {
   color: #a283d7;
   text-decoration: none;
   border-bottom: 1px solid transparent;
@@ -112,22 +112,49 @@ a {
     color 0.15s ease;
 }
 
-a:not(:has(img[class*="81x33"])):hover {
+a.link:active {
+  color: #a890d1;
+}
+
+a.link:visited {
+  color: #a890d1;
+}
+
+a.link:focus-visible {
+  outline: 2px solid #a890d1;
+  outline-offset: 2px;
+}
+
+a.link:hover {
   color: #a890d1;
   border-bottom-color: currentColor;
 }
 
-a:active {
-  color: #a890d1;
+a.text {
+  color: #ffffff;
+  text-decoration: none;
+  border-bottom: 0px solid transparent;
+  transition:
+    border-color 0s ease,
+    color 0s ease;
 }
 
-a:visited {
-  color: #a890d1;
+a.text:active {
+  color: #ffffff;
 }
 
-a:focus-visible {
-  outline: 2px solid #a890d1;
-  outline-offset: 2px;
+a.text:visited {
+  color: #ffffff;
+}
+
+a.text:focus-visible {
+  outline: 0px solid #a890d1;
+  outline-offset: 0px;
+}
+
+a.text:hover {
+  color: #ffffff;
+  border-rgb(255, 255, 255)color: currentColor;
 }
 
 p {
