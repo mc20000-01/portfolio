@@ -124,7 +124,7 @@ audio.addEventListener("pause", () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  const el = document.getElementById("age");
+  const el = document.getElementsByClassName("age");
   if (!el) return;
 
   const birthMs = Date.parse("2012-05-27");
