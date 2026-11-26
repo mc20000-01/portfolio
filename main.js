@@ -46,35 +46,64 @@ audio.addEventListener("ended", () => {
   audio.play();
 });
 
-fetch("/scripts.html")
+const loaded = (el) =>
+  new Promise((res) => {
+    el.onload = el.onerror = res;
+  });
+
+let revealed = false;
+function reveal() {
+  if (revealed) return;
+  revealed = true;
+  document.querySelector('link[href$="hide.css"]')?.remove();
+}
+
+setTimeout(reveal, 5000);
+
+const scriptsDone = fetch("/scripts.html")
   .then((r) => r.text())
   .then((head) => {
     const doc = new DOMParser().parseFromString(head, "text/html");
+    const waits = [];
+
     for (const old of doc.querySelectorAll("script")) {
       const s = document.createElement("script");
       for (const a of old.attributes) s.setAttribute(a.name, a.value);
       s.async = false;
       s.textContent = old.textContent;
+      if (s.src) waits.push(loaded(s));
       document.body.append(s);
     }
-    doc.querySelectorAll("link, meta").forEach((n) => document.head.append(n));
+
+    doc.querySelectorAll("link, meta").forEach((n) => {
+      if (n.tagName === "LINK" && n.rel === "stylesheet") waits.push(loaded(n));
+      document.head.append(n);
+    });
+
+    return Promise.all(waits);
   });
 
-fetch("/footer.html")
+const footerDone = fetch("/footer.html")
   .then((r) => r.text())
   .then((body) => {
     document.body.insertAdjacentHTML("beforeEnd", body);
     document.getElementById("play").onclick = () =>
       audio.paused ? audio.play() : audio.pause();
+    setcount();
   });
 
-fetch("/topbar.html")
+const topbarDone = fetch("/topbar.html")
   .then((r) => r.text())
   .then((body) => {
     document.body.insertAdjacentHTML("afterBegin", body);
   });
 
-setcount();
+Promise.allSettled([
+  scriptsDone,
+  footerDone,
+  topbarDone,
+  document.fonts.ready,
+]).then(reveal);
 
 window.addEventListener(
   "mousedown",
