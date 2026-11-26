@@ -33,6 +33,7 @@
 }
 
 body {
+  display: all !important;
   display: flex;
   font-size: 12px !important;
   background-color: #000000;
