@@ -124,7 +124,7 @@ audio.addEventListener("pause", () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  const el = document.getElementsByClassName("age");
+  const el = document.getElementById("age");
   if (!el) return;
 
   const birthMs = Date.parse("2012-05-27");
@@ -133,9 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function tick() {
     const years = (Date.now() - birthMs) / msPerYear;
-    console.log(years.toFixed(decimals));
     el.textContent = years.toFixed(decimals);
-    requestAnimationFrame(tick);
   }
 
   tick();
