@@ -122,3 +122,20 @@ audio.addEventListener("play", () => {
 audio.addEventListener("pause", () => {
   document.getElementById("play").textContent = "music  ▶";
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const el = document.getElementById("age");
+  if (!el) return;
+
+  const birthMs = Date.parse("2012-05-27");
+  const msPerYear = 1000 * 60 * 60 * 24 * 365.2425;
+  const decimals = 2;
+
+  function tick() {
+    const years = (Date.now() - birthMs) / msPerYear;
+    el.textContent = years.toFixed(decimals);
+    requestAnimationFrame(tick);
+  }
+
+  tick();
+});
