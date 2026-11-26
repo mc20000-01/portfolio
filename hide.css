@@ -1,4 +1,7 @@
-body > * {
-    background-image: url(/assets/wallpaper.svg);
+body {
     display: none !important;
+}
+
+html {
+    background-image: url(/assets/wallpaper.svg);
 }
