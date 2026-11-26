@@ -134,6 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function tick() {
     const years = (Date.now() - birthMs) / msPerYear;
     el.textContent = years.toFixed(decimals);
+    console.log(years.toFixed(decimals));
     requestAnimationFrame(tick);
   }
 
